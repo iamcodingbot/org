@@ -23,12 +23,12 @@
 
   ACTION org::createsimple (name creator, name badge, vector<name> parentbadge, string ipfsimage, string details) {
     require_auth(creator);
-    
+
     checkrole(creator, name("hcd"));
 
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
+      name("profiles"),
       name("createsimple"),
       createsimple_args {
         .org = get_self(),
@@ -40,14 +40,14 @@
   }
 
 
-  ACTION org::creategotcha (name creator, name badge, time_point starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details) {
+  ACTION org::creategotcha (name creator, name badge, time_point_sec starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details) {
     require_auth(creator);
     
     checkrole(creator, name("hcd"));
     
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
+      name("profiles"),
       name("creategotcha"),
       creategotcha_args {
         .org = get_self(),
@@ -60,34 +60,36 @@
     }.send();
   }
 
+  ACTION org::createrollup (name creator, name badge, vector<badge_count> rollup_criteria, string ipfsimage, string details) {
+    require_auth(creator);
 
-  ACTION org::claimgotcha (name claimer) {
-    require_auth(claimer);
-    
-    checkrole(claimer, name("member"));
-    
+    checkrole(creator, name("hcd"));
+
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
-      name("claimgotcha"),
-      claimgotcha_args {
+      name("profiles"),
+      name("createrollup"),
+      createrollup_args {
         .org = get_self(),
-        .account = claimer }
+        .badge = badge,
+        .rollup_criteria = rollup_criteria,
+        .ipfsimage = ipfsimage,
+        .details = details }
     }.send();
   }
 
-  ACTION org::givegotcha (name from, name to, uint8_t amount, string memo ) {
+  ACTION org::givegotcha (name badge, name from, name to, uint8_t amount, string memo ) {
     require_auth(from);
     
     checkrole(from, name("member"));
-    checkrole(to, name("member"));
 
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
+      name("profiles"),
       name("givegotcha"),
       givegotcha_args {
         .org = get_self(),
+        .badge = badge,
         .from = from,
         .to = to,
         .amount = amount,
@@ -104,7 +106,7 @@
 
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
+      name("profiles"),
       name("givesimple"),
       givesimple_args {
         .org = get_self(),
@@ -115,20 +117,19 @@
   }
 
 
-  ACTION org::rollup (name actor, name badge, vector<badge_count>& existing_badges) {
+  ACTION org::takerollup (name actor, name badge) {
     require_auth(actor);
 
-    checkrole(actor, name("member"));
+    //checkrole(actor, name("member"));
     
     action {
       permission_level{get_self(), name("active")},
-      name("profile"),
-      name("rollup"),
+      name("profiles"),
+      name("takerollup"),
       rollup_args {
         .org = get_self(),
         .account = actor,
-        .badge = badge,
-        .existing_badges = existing_badges }
+        .badge = badge}
     }.send();
   }
 

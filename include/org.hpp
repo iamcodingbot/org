@@ -11,15 +11,23 @@ CONTRACT org : public contract {
       name badge;
       uint16_t count;
     };
+
   ACTION addrole(name member, name role, time_point starttime, time_point endtime);
+  
   ACTION createsimple (name creator, name badge, vector<name> parentbadge, string ipfsimage, string details);
-  ACTION creategotcha (name creator, name badge, time_point starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details);
-  ACTION claimgotcha (name claimer);
-  ACTION givegotcha (name from, name to, uint8_t amount, string memo );
+  ACTION creategotcha (name creator, name badge, time_point_sec starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details);
+  ACTION createrollup (name creator, name badge, vector<badge_count> rollup_criteria, string ipfsimage, string details);
+  ACTION givegotcha (name badge, name from, name to, uint8_t amount, string memo );
   ACTION givesimple (name from, name to, name badge, string memo );
-  ACTION rollup (name actor, name badge, vector<badge_count>& existing_badges);
+  ACTION takerollup (name account, name badge);
 
   private:
+
+    TABLE badge {
+      name badge;
+      name account;
+    };
+
 
     TABLE members {
       name role;
@@ -46,9 +54,17 @@ CONTRACT org : public contract {
     struct creategotcha_args {
       name org;
       name badge;
-      time_point starttime;
+      time_point_sec starttime;
       uint64_t cycle_length;
       uint8_t max_cap;
+      string ipfsimage;
+      string details;
+    };
+
+    struct createrollup_args {
+      name org;
+      name badge;
+      vector<badge_count> rollup_criteria;
       string ipfsimage;
       string details;
     };
@@ -60,6 +76,7 @@ CONTRACT org : public contract {
 
     struct givegotcha_args {
       name org;
+      name badge;
       name from;
       name to;
       uint8_t amount;
@@ -77,7 +94,6 @@ CONTRACT org : public contract {
       name org;
       name account;
       name badge;
-      vector<badge_count> existing_badges;
     };
 
 };

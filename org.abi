@@ -26,6 +26,20 @@
             ]
         },
         {
+            "name": "badge",
+            "base": "",
+            "fields": [
+                {
+                    "name": "badge",
+                    "type": "name"
+                },
+                {
+                    "name": "account",
+                    "type": "name"
+                }
+            ]
+        },
+        {
             "name": "badge_count",
             "base": "",
             "fields": [
@@ -36,16 +50,6 @@
                 {
                     "name": "count",
                     "type": "uint16"
-                }
-            ]
-        },
-        {
-            "name": "claimgotcha",
-            "base": "",
-            "fields": [
-                {
-                    "name": "claimer",
-                    "type": "name"
                 }
             ]
         },
@@ -63,7 +67,7 @@
                 },
                 {
                     "name": "starttime",
-                    "type": "time_point"
+                    "type": "time_point_sec"
                 },
                 {
                     "name": "cycle_length",
@@ -72,6 +76,32 @@
                 {
                     "name": "max_cap",
                     "type": "uint8"
+                },
+                {
+                    "name": "ipfsimage",
+                    "type": "string"
+                },
+                {
+                    "name": "details",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "createrollup",
+            "base": "",
+            "fields": [
+                {
+                    "name": "creator",
+                    "type": "name"
+                },
+                {
+                    "name": "badge",
+                    "type": "name"
+                },
+                {
+                    "name": "rollup_criteria",
+                    "type": "badge_count[]"
                 },
                 {
                     "name": "ipfsimage",
@@ -113,6 +143,10 @@
             "name": "givegotcha",
             "base": "",
             "fields": [
+                {
+                    "name": "badge",
+                    "type": "name"
+                },
                 {
                     "name": "from",
                     "type": "name"
@@ -172,20 +206,16 @@
             ]
         },
         {
-            "name": "rollup",
+            "name": "takerollup",
             "base": "",
             "fields": [
                 {
-                    "name": "actor",
+                    "name": "account",
                     "type": "name"
                 },
                 {
                     "name": "badge",
                     "type": "name"
-                },
-                {
-                    "name": "existing_badges",
-                    "type": "badge_count[]"
                 }
             ]
         }
@@ -197,13 +227,13 @@
             "ricardian_contract": ""
         },
         {
-            "name": "claimgotcha",
-            "type": "claimgotcha",
+            "name": "creategotcha",
+            "type": "creategotcha",
             "ricardian_contract": ""
         },
         {
-            "name": "creategotcha",
-            "type": "creategotcha",
+            "name": "createrollup",
+            "type": "createrollup",
             "ricardian_contract": ""
         },
         {
@@ -222,12 +252,19 @@
             "ricardian_contract": ""
         },
         {
-            "name": "rollup",
-            "type": "rollup",
+            "name": "takerollup",
+            "type": "takerollup",
             "ricardian_contract": ""
         }
     ],
     "tables": [
+        {
+            "name": "badge",
+            "type": "badge",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
         {
             "name": "members",
             "type": "members",
