@@ -11,36 +11,29 @@ CONTRACT org : public contract {
       name badge;
       uint16_t count;
     };
-
-  ACTION addrole(name member, name role, time_point starttime, time_point endtime);
   
-  ACTION createsimple (name creator, name badge, vector<name> parentbadge, string ipfsimage, string details);
-  ACTION creategotcha (name creator, name badge, time_point_sec starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details);
-  ACTION createrollup (name creator, name badge, vector<badge_count> rollup_criteria, string ipfsimage, string details);
-  ACTION givegotcha (name badge, name from, name to, uint8_t amount, string memo );
-  ACTION givesimple (name from, name to, name badge, string memo );
-  ACTION takerollup (name account, name badge);
+    ACTION init (name checks_contract);
+
+    ACTION createsimple (name creator, name badge, vector<name> parentbadge, string ipfsimage, string details);
+    ACTION creategotcha (name creator, name badge, time_point_sec starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details);
+    ACTION createrollup (name creator, name badge, vector<badge_count> rollup_criteria, string ipfsimage, string details);
+    ACTION givegotcha (name badge, name from, name to, uint8_t amount, string memo );
+    ACTION givesimple (name from, name to, name badge, string memo );
+    ACTION takerollup (name account, name badge);
 
   private:
 
-    TABLE badge {
-      name badge;
-      name account;
+    TABLE settings {
+      uint64_t id;
+      name checks_contract;
+      auto primary_key() const { return id; }
     };
+    typedef multi_index<name("settings"), settings> settings_table;
 
-
-    TABLE members {
-      name role;
-      time_point starttime;
-      time_point endtime;
-      auto primary_key() const {return role.value; }
-    };
-    typedef multi_index<name("members"), members> members_table;
-
-    void checkrole(name member, name role) {
-      members_table _members( _self, member.value );
-      auto itr = _members.require_find(role.value, "Not a valid role for this action");
-      check(current_time_point() >= itr->starttime && current_time_point() <= itr->endtime, "role expired");
+    name checkscontract() {
+      settings_table _settings( get_self(), get_self().value );
+      auto itr = _settings.require_find(1, "init missing");
+      return itr->checks_contract;
     }
 
     struct createsimple_args {

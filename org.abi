@@ -4,42 +4,6 @@
     "types": [],
     "structs": [
         {
-            "name": "addrole",
-            "base": "",
-            "fields": [
-                {
-                    "name": "member",
-                    "type": "name"
-                },
-                {
-                    "name": "role",
-                    "type": "name"
-                },
-                {
-                    "name": "starttime",
-                    "type": "time_point"
-                },
-                {
-                    "name": "endtime",
-                    "type": "time_point"
-                }
-            ]
-        },
-        {
-            "name": "badge",
-            "base": "",
-            "fields": [
-                {
-                    "name": "badge",
-                    "type": "name"
-                },
-                {
-                    "name": "account",
-                    "type": "name"
-                }
-            ]
-        },
-        {
             "name": "badge_count",
             "base": "",
             "fields": [
@@ -188,20 +152,26 @@
             ]
         },
         {
-            "name": "members",
+            "name": "init",
             "base": "",
             "fields": [
                 {
-                    "name": "role",
+                    "name": "checks_contract",
                     "type": "name"
+                }
+            ]
+        },
+        {
+            "name": "settings",
+            "base": "",
+            "fields": [
+                {
+                    "name": "id",
+                    "type": "uint64"
                 },
                 {
-                    "name": "starttime",
-                    "type": "time_point"
-                },
-                {
-                    "name": "endtime",
-                    "type": "time_point"
+                    "name": "checks_contract",
+                    "type": "name"
                 }
             ]
         },
@@ -221,11 +191,6 @@
         }
     ],
     "actions": [
-        {
-            "name": "addrole",
-            "type": "addrole",
-            "ricardian_contract": ""
-        },
         {
             "name": "creategotcha",
             "type": "creategotcha",
@@ -252,6 +217,11 @@
             "ricardian_contract": ""
         },
         {
+            "name": "init",
+            "type": "init",
+            "ricardian_contract": ""
+        },
+        {
             "name": "takerollup",
             "type": "takerollup",
             "ricardian_contract": ""
@@ -259,15 +229,8 @@
     ],
     "tables": [
         {
-            "name": "badge",
-            "type": "badge",
-            "index_type": "i64",
-            "key_names": [],
-            "key_types": []
-        },
-        {
-            "name": "members",
-            "type": "members",
+            "name": "settings",
+            "type": "settings",
             "index_type": "i64",
             "key_names": [],
             "key_types": []
