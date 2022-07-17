@@ -20,17 +20,7 @@
   ACTION org::createsimple (name creator, name badge, vector<name> parentbadge, string ipfsimage, string details) {
     require_auth(creator);
 
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("cschecks"),
-      createsimple_args {
-        .org = get_self(),
-        .badge = badge,
-        .parentbadge = parentbadge,
-        .ipfsimage = ipfsimage,
-        .details = details }
-    }.send();
+    require_recipient(checkscontract());
 
     action {
       permission_level{get_self(), name("active")},
@@ -49,19 +39,7 @@
   ACTION org::creategotcha (name creator, name badge, time_point_sec starttime, uint64_t cycle_length, uint8_t max_cap, string ipfsimage, string details) {
     require_auth(creator);
     
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("cgchecks"),
-      creategotcha_args {
-        .org = get_self(),
-        .badge = badge,
-        .starttime = starttime,
-        .cycle_length = cycle_length,
-        .max_cap = max_cap,
-        .ipfsimage = ipfsimage,
-        .details = details }
-    }.send();
+    require_recipient(checkscontract());
     
     action {
       permission_level{get_self(), name("active")},
@@ -81,17 +59,7 @@
   ACTION org::createrollup (name creator, name badge, vector<badge_count> rollup_criteria, string ipfsimage, string details) {
     require_auth(creator);
 
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("crchecks"),
-      createrollup_args {
-        .org = get_self(),
-        .badge = badge,
-        .rollup_criteria = rollup_criteria,
-        .ipfsimage = ipfsimage,
-        .details = details }
-    }.send();
+    require_recipient(checkscontract());
 
     action {
       permission_level{get_self(), name("active")},
@@ -109,18 +77,7 @@
   ACTION org::givegotcha (name badge, name from, name to, uint8_t amount, string memo ) {
     require_auth(from);
     
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("ggchecks"),
-      givegotcha_args {
-        .org = get_self(),
-        .badge = badge,
-        .from = from,
-        .to = to,
-        .amount = amount,
-        .memo = memo }
-    }.send();
+    require_recipient(checkscontract());
 
     action {
       permission_level{get_self(), name("active")},
@@ -141,16 +98,7 @@
   ACTION org::givesimple (name from, name to, name badge, string memo ) {
     require_auth(from);
 
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("gschecks"),
-      givesimple_args {
-        .org = get_self(),
-        .to = to,
-        .badge = badge,
-        .memo = memo }
-    }.send();
+    require_recipient(checkscontract());
 
     action {
       permission_level{get_self(), name("active")},
@@ -168,15 +116,7 @@
   ACTION org::takerollup (name actor, name badge) {
     require_auth(actor);
 
-    action {
-      permission_level{get_self(), name("active")},
-      checkscontract(),
-      name("trchecks"),
-      rollup_args {
-        .org = get_self(),
-        .account = actor,
-        .badge = badge}
-    }.send();
+    require_recipient(checkscontract());
     
     action {
       permission_level{get_self(), name("active")},
